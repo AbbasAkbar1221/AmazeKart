@@ -3,6 +3,7 @@ import Header from './components/header/Header';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 import Carousel from './components/carousel/Carousel';
+import CardComponent from "./components/card_component/CardComponent";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Header/>
       <Navbar/>
       <Carousel/>
+      <CardComponent/>
       <Footer/>
     </div>
   );
