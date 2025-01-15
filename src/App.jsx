@@ -1,18 +1,23 @@
-import React from 'react'
-import Header from './components/header/Header';
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
-import Carousel from './components/carousel/Carousel';
-import CardComponent from "./components/card_component/CardComponent";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./components/header/Header";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
+import CartPage from "./pages/CartPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <Navbar/>
-      <Carousel/>
-      <CardComponent/>
-      <Footer/>
+      <Router>
+        <Header />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+        <Footer />
+      </Router>
     </div>
   );
 }
