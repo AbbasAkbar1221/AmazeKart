@@ -1,5 +1,6 @@
 import React from "react";
 import {card_components_items} from '../../data/components'
+import { Link } from "react-router-dom";
 
 const Card = ({ heading, images, hyperlink }) => {
     return (
@@ -55,12 +56,14 @@ const CardComponent = () => {
     return (
         <div className="grid grid-cols-4 gap-6 p-6 bg-gray-50">
             {card_components_items.map((item, index) => (
+                <Link to='products'>
                 <Card 
                     key={index} 
                     heading={item.heading} 
                     images={item.images} 
                     hyperlink={item.hyperlink} 
                 />
+                </Link>
             ))}
         </div>
     );
