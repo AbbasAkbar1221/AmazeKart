@@ -5,18 +5,32 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from './pages/ProfilePage'
+
+function layout(element){
+  return (
+    <>
+    <Header />
+    <Navbar />
+    {element}
+    <Footer />
+    </>
+  )
+}
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
-        <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/" element={layout(<HomePage />)} />
+          <Route path="/cart" element={layout(<CartPage />)} />
+          <Route path="/login" element={<LoginPage/>} />
+          <Route path="/register" element={<RegisterPage/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
-        <Footer />
       </Router>
     </div>
   );

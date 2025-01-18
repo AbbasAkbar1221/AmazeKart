@@ -19,6 +19,14 @@ export default function CartPage() {
     setSelectedItems([]);
   };
 
+  const handleCheckboxChange = (id) => {
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((itemId) => itemId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
   const handleRemoveItem = (id) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
     setSelectedItems((prevSelected) =>
@@ -65,6 +73,7 @@ export default function CartPage() {
                 item={item}
                 onRemoveItem={handleRemoveItem}
                 onQuantityChange={handleQuantityChange}
+                onCheckboxChange={handleCheckboxChange}
                 isSelected={selectedItems.includes(item.id)}
               />
             ))}
