@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -14,6 +15,11 @@ const ProfilePage = () => {
             <p className="text-gray-600 text-sm">
               You are successfully logged in.
             </p>
+            <div className="mt-4 text-sm">
+              <Link className="text-blue-500 hover:underline" to="/login">
+                Logout
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="text-center">
