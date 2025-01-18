@@ -1,34 +1,53 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState: {
-    items: [], 
-    totalAmount: 0, 
+    items: [],
+    totalAmount: 0,
   },
   reducers: {
     addItemToCart(state, action) {
       const newItem = action.payload;
-      state.items.push(newItem); 
-      state.totalAmount += newItem.price; 
+      const existingItem = state.items.find((item) => item.id === newItem.id);
+
+      if (existingItem) {
+        existingItem.quantity += 1; // Increment quantity if item exists
+      } else {
+        state.items.push({ ...newItem, quantity: 1 }); // Add new item with initial quantity
+      }
+
+      state.totalAmount += newItem.price;
     },
     removeItemFromCart(state, action) {
       const id = action.payload;
-      const itemIndex = state.items.findIndex(item => item.id === id);
-      if (itemIndex !== -1) {
-        const itemToRemove = state.items[itemIndex];
-        state.items.splice(itemIndex, 1); 
-        state.totalAmount -= itemToRemove.price;
+      const itemToRemove = state.items.find((item) => item.id === id);
+    
+      if (itemToRemove) {
+        if (itemToRemove.quantity > 1) {
+          itemToRemove.quantity -= 1;
+          state.totalAmount -= itemToRemove.price;
+        } else {
+          state.items = state.items.filter(item => item.id !== id); 
+          state.totalAmount -= itemToRemove.price;
+        }
       }
-    },
+    },        
     clearCart(state) {
       state.items = [];
-      state.totalAmount = 0; 
+      state.totalAmount = 0;
     },
+    toggleCheckBox: (state, action) => {
+      const id = action.payload;
+      const item = state.items.find((item) => item.id === id);
+      if (item) {
+        item.isSelected = !item.isSelected;
+      }
+    },    
   },
 });
 
-
-export const { addItemToCart, removeItemFromCart, clearCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, clearCart, toggleCheckBox } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

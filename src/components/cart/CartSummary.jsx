@@ -1,10 +1,6 @@
-
-import React from "react";
-
-export default function CartSummary({ subtotal, onProceedToCheckout }) {
+export default function CartSummary({ subtotal = 0, onProceedToCheckout }) {
   return (
     <div className="p-4 border rounded shadow-md bg-white">
-      {/* Free Delivery Info */}
       <div className="flex items-center bg-green-50 p-3 rounded mb-4">
         <div className="w-6 h-6 bg-green-700 rounded-full flex items-center justify-center text-white mr-2">
           ✓

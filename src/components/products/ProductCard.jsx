@@ -1,18 +1,18 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../slices/cartSlice";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
-  const [id, setId] = React.useState(0);
-  const findItemsId = () => {
-    const id = items.map((item) => item.id);
-    setId(id);
+  const cartItem = items.find(item => item.id === product.id);
+
+  const handleAddToCart = () => {
+    dispatch(addItemToCart(product));
   };
 
   return (
-    <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="p-4 bg-white shadow-lg rounded-lg border hover:shadow-xl transition-shadow duration-300">
       <div className="flex justify-center items-center">
         <img
           className="rounded-t-lg h-52 object-cover"
@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="p-4">
-        <h3 className="font-semibold text-lg text-gray-800">{product.name}</h3>
+        <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors">{product.name}</h2>
         <p className="text-sm text-gray-600">{product.description}</p>
         <div className="mt-2">
           <span className="text-xl font-bold text-gray-800">
@@ -42,14 +42,11 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="mt-3">
           <button
-            onClick={() => dispatch(addItemToCart(product))}
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+            onClick={handleAddToCart}
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+            disabled={!product.inStock}
           >
-            {id === product.id ? (
-              <span className="text-sm text-white ml-2">Added</span>
-            ) : (
-              <span className="text-sm text-white ml-2">Add to Cart</span>
-            )}
+            {cartItem ? `Added (${cartItem.quantity})` : product.inStock ? "Add to Cart" : "Out of Stock"}
           </button>
         </div>
       </div>

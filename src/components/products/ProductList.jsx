@@ -61,7 +61,7 @@ const productData = [
   {
     id: 5,
     name: "Bevzilla 24 Flavoured Coffee Sachets & Frother Coffee Kit",
-    description: "Premium instant coffee kit with assorted flavors.",
+    description: "Premium instant coffee kit with assorted flavors. Perfect for quick coffee breaks or on-the-go moments.",
     price: 249.0,
     originalPrice: 799.0,
     discount: 69,
