@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     repassword: "",
   });
+
+  const Navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,35 +26,25 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
+      const response = await axios.post("http://localhost:5000/register", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Registration successful:", data);
+      if (response.status === 200) {
         alert("Account created successfully!");
-        // Redirect or additional logic
-      } else {
-        const error = await response.json();
-        console.error("Registration failed:", error);
-        alert(error.message || "Registration failed");
+        console.log("Registration successful:", response.data);
+        Navigate('/login');
       }
-    } catch (err) {
-      console.error("Error:", err);
-      alert("An error occurred. Please try again.");
+    } catch (error) {
+      console.error("Error during registration:", error.response?.data || error);
+      alert(error.response?.data.message || "Registration failed");
     }
   };
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      {/* Logo Section */}
       <div className="mb-6">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
@@ -59,28 +53,25 @@ export default function RegisterPage() {
         />
       </div>
 
-      {/* Register Form */}
       <div className="w-full max-w-md bg-white p-6 border border-gray-300 rounded-md shadow-md">
         <h1 className="text-2xl font-semibold mb-4">Create account</h1>
 
         <form onSubmit={handleSubmit}>
-          {/* Name Input */}
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Your name
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+              Your username
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-yellow-500"
               required
             />
           </div>
 
-          {/* Email Input */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -96,7 +87,6 @@ export default function RegisterPage() {
             />
           </div>
 
-          {/* Password Input */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Password
@@ -116,7 +106,6 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          {/* Re-enter Password Input */}
           <div className="mb-4">
             <label
               htmlFor="repassword"
@@ -135,7 +124,6 @@ export default function RegisterPage() {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
@@ -144,7 +132,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Privacy Notice */}
         <p className="text-xs text-gray-600 mt-4">
           By creating an account, you agree to Amazon's{" "}
           <a href="#" className="text-blue-500 hover:underline">
@@ -157,17 +144,11 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      {/* Sign-In Link */}
       <div className="mt-6 text-sm text-gray-600">
         Already have an account?{" "}
-        {/* <a href="#" className="text-blue-500 hover:underline">
-          Sign in
-        </a> */}
-        <div className="mt-4 text-sm">
-              <Link className="text-blue-500 hover:underline" to="/login">
-                Login
-              </Link>
-            </div>
+        <Link className="text-blue-500 hover:underline" to="/login">
+          Login
+        </Link>
       </div>
     </div>
   );

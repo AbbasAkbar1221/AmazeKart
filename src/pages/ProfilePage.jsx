@@ -10,7 +10,7 @@ const ProfilePage = () => {
         {currentUser ? (
           <div className="text-center">
             <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-              Welcome, {currentUser.email}!
+              Welcome, {currentUser.username}!
             </h1>
             <p className="text-gray-600 text-sm">
               You are successfully logged in.
