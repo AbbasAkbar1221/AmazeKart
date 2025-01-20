@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from './pages/ProfilePage'
 import ProductPage from "./pages/ProductsPage";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function layout(element){
   return (
@@ -22,6 +24,10 @@ function layout(element){
 }
 
 function App() {
+  const user = useSelector(state=>state.auth.currentUser)
+  // useEffect(()=>{
+  //   axios.get()
+  // }, [user])
   return (
     <div className="App">
       <Router>

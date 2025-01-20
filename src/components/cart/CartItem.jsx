@@ -1,10 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addItemToCart, removeItemFromCart, toggleCheckBox } from "../../slices/cartSlice"; // Import the actions
+import { addItemToCart, removeItemFromCart, toggleCheckBox } from "../../slices/cartSlice"; 
 
 export default function CartItem({
   item,
-  isSelected,
 }) {
   const dispatch = useDispatch();
 
@@ -37,7 +36,7 @@ export default function CartItem({
       <div className="flex items-center">
         <input
           type="checkbox"
-          checked={isSelected}
+          checked={item.isSelected ?? true}
           onChange={() => dispatch(toggleCheckBox(item.id))}
           className="mr-4"
           disabled={!item.inStock}

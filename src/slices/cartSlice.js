@@ -8,13 +8,17 @@ const cartSlice = createSlice({
   },
   reducers: {
     addItemToCart(state, action) {
+      console.log(action.payload);
+      
       const newItem = action.payload;
-      const existingItem = state.items.find((item) => item.id === newItem.id);
+      const existingItem = state.items.find((item) => item.id === newItem._id);
 
       if (existingItem) {
-        existingItem.quantity += 1; // Increment quantity if item exists
+        existingItem.quantity += 1;
+        console.log(existingItem.quantity);
+        
       } else {
-        state.items.push({ ...newItem, quantity: 1 }); // Add new item with initial quantity
+        state.items.push({ id: newItem._id, ...newItem, quantity: 1 });
       }
 
       state.totalAmount += newItem.price;
@@ -22,17 +26,17 @@ const cartSlice = createSlice({
     removeItemFromCart(state, action) {
       const id = action.payload;
       const itemToRemove = state.items.find((item) => item.id === id);
-    
+
       if (itemToRemove) {
         if (itemToRemove.quantity > 1) {
           itemToRemove.quantity -= 1;
           state.totalAmount -= itemToRemove.price;
         } else {
-          state.items = state.items.filter(item => item.id !== id); 
+          state.items = state.items.filter(item => item.id !== id);
           state.totalAmount -= itemToRemove.price;
         }
       }
-    },        
+    },
     clearCart(state) {
       state.items = [];
       state.totalAmount = 0;
@@ -43,7 +47,7 @@ const cartSlice = createSlice({
       if (item) {
         item.isSelected = !item.isSelected;
       }
-    },    
+    },
   },
 });
 
@@ -51,3 +55,4 @@ export const { addItemToCart, removeItemFromCart, clearCart, toggleCheckBox } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
+
