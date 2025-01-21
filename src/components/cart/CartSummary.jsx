@@ -1,4 +1,6 @@
-export default function CartSummary({ subtotal = 0, onProceedToCheckout }) {
+export default function CartSummary({ subtotal = 0, cartItems }) {
+  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <div className="p-4 border rounded shadow-md bg-white">
       <div className="flex items-center bg-green-50 p-3 rounded mb-4">
@@ -17,8 +19,8 @@ export default function CartSummary({ subtotal = 0, onProceedToCheckout }) {
 
       {/* Subtotal Section */}
       <div className="mb-4">
-        <p className="text-gray-700">
-          <strong>Subtotal ({1} item): </strong>
+        <p className="text-gray-900">
+          Subtotal ({itemCount} {itemCount > 1 ? "Items" : "Item"}):{" "}
           <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
         </p>
         <div className="flex items-center mt-2">
@@ -29,15 +31,10 @@ export default function CartSummary({ subtotal = 0, onProceedToCheckout }) {
         </div>
       </div>
 
-      {/* Proceed to Checkout Button */}
-      <button
-        onClick={onProceedToCheckout}
-        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded mb-4"
-      >
+      <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded mb-4">
         Proceed to Buy
       </button>
 
-      {/* EMI Section */}
       <div className="text-sm text-gray-600 border-t pt-2">
         <button className="flex items-center justify-between w-full text-gray-700">
           <span>EMI Available</span>

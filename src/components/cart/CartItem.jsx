@@ -1,29 +1,37 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addItemToCart, removeItemFromCart, toggleCheckBox } from "../../slices/cartSlice"; 
+import {
+  addItemToCart,
+  removeItemFromCart,
+  removeProduct,
+  toggleCheckBox,
+} from "../../slices/cartSlice";
 
-export default function CartItem({
-  item,
-}) {
+export default function CartItem({ item }) {
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    if (item.quantity < 5) {
-      dispatch(addItemToCart(item)); 
+    try {
+      dispatch(addItemToCart(item));
+    } catch (error) {
+      console.error("Failed to increment item quantity:", error);
     }
   };
 
   const handleDecrement = () => {
-    if (item.quantity > 1) {
-      dispatch(removeItemFromCart(item.id));
-    }
-    else{
-        dispatch(removeItemFromCart(item.id))
+    try {
+      dispatch(removeItemFromCart(item._id));
+    } catch (error) {
+      console.error("Failed to decrement item quantity:", error);
     }
   };
 
   const handleRemoveItem = () => {
-    dispatch(removeItemFromCart(item.id)); 
+    try {
+      dispatch(removeProduct(item._id));
+    } catch (error) {
+      console.error("Failed to remove item:", error);
+    }
   };
 
   return (
@@ -36,8 +44,8 @@ export default function CartItem({
       <div className="flex items-center">
         <input
           type="checkbox"
-          checked={item.isSelected ?? true}
-          onChange={() => dispatch(toggleCheckBox(item.id))}
+          checked={item.isSelected}
+          onChange={() => dispatch(toggleCheckBox(item._id))}
           className="mr-4"
           disabled={!item.inStock}
         />
@@ -58,9 +66,7 @@ export default function CartItem({
             >
               {item.inStock ? "In Stock" : "Out of Stock"}
             </p>
-            <p className="text-gray-500 mt-2">
-              #1 Best Seller in Coffee Gifts
-            </p>
+            <p className="text-gray-500 mt-2">#1 Best Seller in Coffee Gifts</p>
           </div>
         </div>
       </div>
@@ -73,14 +79,23 @@ export default function CartItem({
         <div className="text-red-500">{item.discount}% off</div>
 
         <div className="mt-2 flex items-center space-x-2">
-          
-          <button
-            onClick={handleDecrement}
-            className="px-2 py-1 border rounded text-gray-700"
-            disabled={!item.inStock || item.quantity <= 1}
-          >
-            -
-          </button>
+          {item.quantity > 1 ? (
+            <button
+              onClick={handleDecrement}
+              className="px-2 py-1 border rounded text-gray-700"
+            >
+              -
+            </button>
+          ) : (
+            <span
+              onClick={handleRemoveItem}
+              className="material-icons text-gray-800 cursor-pointer"
+              title="Delete"
+            >
+              delete
+            </span>
+          )}
+
           <div className="px-3 py-1 border rounded bg-gray-100">
             {item.quantity}
           </div>
@@ -93,7 +108,6 @@ export default function CartItem({
           </button>
         </div>
 
-      
         <div className="mt-2">
           <button
             onClick={handleRemoveItem}

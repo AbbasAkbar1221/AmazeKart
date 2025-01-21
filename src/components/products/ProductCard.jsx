@@ -1,14 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   const cartItem = items.find(item => item.id === product._id);
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart(product));
+    if(cartItem && cartItem.quantity>0){
+      navigate('/cart')
+    }
+    else{
+      dispatch(addItemToCart(product));
+    }
+    
   };
 
   return (

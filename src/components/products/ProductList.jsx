@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "./ProductCard";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -14,6 +17,7 @@ const ProductList = () => {
         setProductData(response.data);
         setLoading(false);
       } catch (err) {
+        navigate('/login')
         setError("Failed to fetch products");
         setLoading(false);
       }

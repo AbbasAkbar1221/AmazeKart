@@ -8,17 +8,14 @@ const cartSlice = createSlice({
   },
   reducers: {
     addItemToCart(state, action) {
-      console.log(action.payload);
-      
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem._id);
 
       if (existingItem) {
         existingItem.quantity += 1;
         console.log(existingItem.quantity);
-        
       } else {
-        state.items.push({ id: newItem._id, ...newItem, quantity: 1 });
+        state.items.push({ id: newItem._id, ...newItem, quantity: 1, isSelected: true });
       }
 
       state.totalAmount += newItem.price;
@@ -28,15 +25,25 @@ const cartSlice = createSlice({
       const itemToRemove = state.items.find((item) => item.id === id);
 
       if (itemToRemove) {
-        if (itemToRemove.quantity > 1) {
-          itemToRemove.quantity -= 1;
+        if (itemToRemove.quantity === 1) {
+          state.items = state.items.filter((item) => item.id !== id);
           state.totalAmount -= itemToRemove.price;
         } else {
-          state.items = state.items.filter(item => item.id !== id);
+          itemToRemove.quantity -= 1;
           state.totalAmount -= itemToRemove.price;
         }
       }
     },
+  
+    removeProduct(state, action) {
+      const id = action.payload;
+      const itemToRemove = state.items.find((item) => item.id === id);
+      if (itemToRemove) {
+        state.items = state.items.filter((item) => item.id !== id);
+        state.totalAmount -= itemToRemove.price * itemToRemove.quantity;
+      }
+    },
+
     clearCart(state) {
       state.items = [];
       state.totalAmount = 0;
@@ -48,11 +55,27 @@ const cartSlice = createSlice({
         item.isSelected = !item.isSelected;
       }
     },
+    selectAll: (state) => {
+      state.items.forEach((item) => {
+        item.isSelected = true;
+      });
+    },
+    deselectAll: (state) => {
+      state.items.forEach((item) => {
+        item.isSelected = false;
+      });
+    },
   },
 });
 
-export const { addItemToCart, removeItemFromCart, clearCart, toggleCheckBox } =
-  cartSlice.actions;
+export const {
+  addItemToCart,
+  removeItemFromCart,
+  clearCart,
+  toggleCheckBox,
+  removeProduct,
+  selectAll,
+  deselectAll
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
-

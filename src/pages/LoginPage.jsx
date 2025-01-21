@@ -27,7 +27,7 @@ export default function LoginPage() {
       .then((response) => {
         const { token, refresh_token } = response?.data;
         dispatch(setCurrentUser({ token, refresh_token, username }));
-        navigate("/profile");
+        navigate("/products");
       })
       .catch((err) => {
         const errorMessage =
