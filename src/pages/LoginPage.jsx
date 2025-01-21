@@ -26,7 +26,7 @@ export default function LoginPage() {
       .post("http://localhost:5000/login", { username, password })
       .then((response) => {
         const { token, refresh_token } = response?.data;
-        dispatch(setCurrentUser({ username }));
+        dispatch(setCurrentUser( {username} ));
         localStorage.setItem('token', token)
         localStorage.setItem('refreshToken', refresh_token)
         navigate("/products");

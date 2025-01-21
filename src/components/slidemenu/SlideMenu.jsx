@@ -1,9 +1,30 @@
-import React from "react";
+import React,{useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import {setCurrentUser} from "../../slices/authSlice";
 
 const SideMenu = ({ isOpen, toggleMenu }) => {
+  const token = localStorage.getItem("token");
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function userDetails(){
+      try{
+        const res = await axios.get("http://localhost:5001/users/me", {
+          headers: {Authorization: `Bearer ${token}`},
+        });
+        dispatch(setCurrentUser(res.data)); 
+      } catch(err){
+        console.log(err);
+      }
+    }
+    userDetails();
+  }, [currentUser])
+  
+  
   return (
-    <>
-      
+    <> 
       <div
         className={`fixed top-0 left-0 h-full w-80 bg-gray-800 text-white transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -12,7 +33,7 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
         
         <div className="bg-gray-800 flex items-center text-white px-5 py-4">
         <span className="material-icons mr-1">account_circle</span> 
-          <h2 className="text-lg font-bold">Hello, Abbas Akbar</h2>
+          <h2 className="text-lg font-bold">{currentUser ? `Hello, ${currentUser.username}` : "Hello, Customer"}</h2>
         </div>
 
         

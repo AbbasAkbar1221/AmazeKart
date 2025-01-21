@@ -11,13 +11,14 @@ const Navbar = () => {
   return (
     <>
       <div className="bg-gray-800 text-white px-4 py-2 text-sm flex space-x-6">
+        <div className="flex items-center space-x-6 border border-transparent hover:border-white " onClick={toggleMenu}>
         <span
           className="material-icons text-white -mr-5 cursor-pointer"
-          onClick={toggleMenu}
         >
           menu
         </span>
-        <span className="cursor-pointer hover:underline">All</span>
+        <span className="cursor-pointer">All</span>
+        </div>
         <span className="cursor-pointer hover:underline">Fresh</span>
         <span className="cursor-pointer hover:underline">MX Player</span>
         <span className="cursor-pointer hover:underline">Sell</span>
