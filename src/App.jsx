@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
@@ -7,46 +7,80 @@ import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from './pages/ProfilePage'
+import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductsPage";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "./slices/authSlice";
+import { useRetryCall } from "./hooks";
 
-function layout(element){
+function layout(element) {
   return (
     <>
-    <Header />
-    <Navbar />
-    {element}
-    <Footer />
+      <Header />
+      <Navbar />
+      {element}
+      <Footer />
     </>
-  )
+  );
 }
 
 function App() {
-  const user = useSelector(state=>state.auth.currentUser)
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  
+  // const user = useSelector((state) => state.auth.currentUser);
+  // useEffect(() => {
+  //   if (user) {
+  //     axios.get('http://localhost:5001/products', {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     })
+  //       .then(response => {
+  //         const products = response?.data || [];
+  //         const items = products.map((product) => ({
+  //           id: product._id,
+  //           ...product,
+  //           quantity: 1,
+  //           isSelected: true,
+  //         }));
+  //         console.log('success');
+  //       })
+  //       .catch(err => console.error(err));
+  //   }
+  // }, [user]);
+
+  // useEffect(() => {
+  //     async function userDetails(){
+  //       try{
+  //         const res = await axios.get("http://localhost:5001/users/me", {
+  //           headers: {Authorization: `Bearer ${token}`},
+  //         });
+  //         dispatch(setCurrentUser(res.data));
+  //       } catch(err){
+  //         console.log(err);
+  //       }
+  //     }
+  //     userDetails();
+  //   }, [])
+
+  const [loading, retryCall] = useRetryCall("get");
 
   useEffect(() => {
-    if (user) {
-      axios.get('http://localhost:5001/products', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(response => {
-          const products = response?.data || [];
-          const items = products.map((product) => ({
-            id: product._id,
-            ...product,
-            quantity: 1,
-            isSelected: true,
-          }));
-          console.log('success');
-        })
-        .catch(err => console.error(err));
-    }
-  }, [user]);
+    const fetchUserDetails = async () => {
+      try {
+        const response = await retryCall("http://localhost:5001/users/me");
+        console.log("Response object:", response);
+        console.log("user",response.data.username);
+        dispatch(setCurrentUser(response.data)); 
+      } catch (err) {
+        console.error("Failed to fetch user details:", err);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+ 
 
   return (
     <div className="App">
@@ -54,10 +88,10 @@ function App() {
         <Routes>
           <Route path="/" element={layout(<HomePage />)} />
           <Route path="/cart" element={layout(<CartPage />)} />
-          <Route path="/login" element={<LoginPage/>} />
-          <Route path="/register" element={<RegisterPage/>} />
-          <Route path="/profile" element={<ProfilePage/>} />
-          <Route path="/products" element={layout(<ProductPage/>)} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/products" element={layout(<ProductPage />)} />
         </Routes>
       </Router>
     </div>

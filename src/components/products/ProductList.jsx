@@ -2,34 +2,55 @@ import React, { use, useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "./ProductCard";
 import { useNavigate } from "react-router-dom";
+import { useRetryCall } from "../../hooks";
 
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       const response = await axios.get("http://localhost:5001/products", {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       setProductData(response.data);
+  //       setLoading(false);
+  //       window.scrollTo(0, 0);
+  //     } catch (err) {
+  //       navigate("/login");
+  //       setError("Failed to fetch products");
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, [])
+
+  const [loading, retryCall] = useRetryCall("get");
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5001/products", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await retryCall("http://localhost:5001/products");
         setProductData(response.data);
-        setLoading(false);
         window.scrollTo(0, 0);
       } catch (err) {
-        navigate("/login");
+        console.error("Failed to fetch products:", err);
         setError("Failed to fetch products");
-        setLoading(false);
+        navigate("/login");
       }
     };
+
     fetchProducts();
-  }, [])
+  }, [retryCall, navigate]);
+
+
 
   if (loading) return <div>Loading products...</div>;
   if (error) return <div>{error}</div>;

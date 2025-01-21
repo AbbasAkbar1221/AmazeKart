@@ -6,25 +6,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
-  const token = localStorage.getItem("token");
-  const refreshToken = localStorage.getItem("refreshToken");
-  const currentUser = useSelector((state) => state.auth.currentUser);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    async function userDetails() {
-      try {
-        const res = await axios.get("http://localhost:5001/users/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        dispatch(setCurrentUser(res.data));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    userDetails();
-  }, [currentUser]);
+  // const refreshToken = localStorage.getItem("refreshToken");
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   // const logoutUser = async () => {
   //   try {

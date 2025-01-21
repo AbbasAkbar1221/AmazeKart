@@ -1,27 +1,9 @@
-import React,{useEffect} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import {setCurrentUser} from "../../slices/authSlice";
+import React from "react";
+import { useSelector } from "react-redux";
 
 const SideMenu = ({ isOpen, toggleMenu }) => {
-  const token = localStorage.getItem("token");
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function userDetails(){
-      try{
-        const res = await axios.get("http://localhost:5001/users/me", {
-          headers: {Authorization: `Bearer ${token}`},
-        });
-        dispatch(setCurrentUser(res.data)); 
-      } catch(err){
-        console.log(err);
-      }
-    }
-    userDetails();
-  }, [currentUser])
-  
+  console.log(currentUser);
   
   return (
     <> 
