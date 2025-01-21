@@ -6,6 +6,7 @@ import Language from './Language'
 import AccountAndList from './AccountAndList'
 import ReturnAndOrders from './ReturnAndOrders'
 import Cart from './Cart'
+import Profile from './Profile'
 
 const Header = () => {
   return (
@@ -18,6 +19,7 @@ const Header = () => {
       <AccountAndList/>
       <ReturnAndOrders/>
       <Cart/>
+      <Profile/>
       </div>
     </div>
   )

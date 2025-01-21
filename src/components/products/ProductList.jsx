@@ -21,6 +21,7 @@ const ProductList = () => {
         });
         setProductData(response.data);
         setLoading(false);
+        window.scrollTo(0, 0);
       } catch (err) {
         navigate("/login");
         setError("Failed to fetch products");

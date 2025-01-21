@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../components/cart/CartItem";
 import CartSummary from "../components/cart/CartSummary";
@@ -8,6 +8,10 @@ import CartActions from "../components/cart/CartActions"
 export default function CartPage() {
   const cartItems = useSelector((state) => state.cart.items);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen w-full p-6">

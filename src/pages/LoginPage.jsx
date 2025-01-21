@@ -29,7 +29,8 @@ export default function LoginPage() {
         dispatch(setCurrentUser( {username} ));
         localStorage.setItem('token', token)
         localStorage.setItem('refreshToken', refresh_token)
-        navigate("/products");
+        // navigate("/products");
+        navigate("/profile");
       })
       .catch((err) => {
         const errorMessage =
