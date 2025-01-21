@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from './pages/ProfilePage'
 import ProductPage from "./pages/ProductsPage";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 function layout(element){
@@ -25,9 +25,29 @@ function layout(element){
 
 function App() {
   const user = useSelector(state=>state.auth.currentUser)
-  // useEffect(()=>{
-  //   axios.get()
-  // }, [user])
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (user) {
+      axios.get('http://localhost:5001/products', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          const products = response?.data || [];
+          const items = products.map((product) => ({
+            id: product._id,
+            ...product,
+            quantity: 1,
+            isSelected: true,
+          }));
+          console.log('success');
+        })
+        .catch(err => console.error(err));
+    }
+  }, [user]);
+
   return (
     <div className="App">
       <Router>

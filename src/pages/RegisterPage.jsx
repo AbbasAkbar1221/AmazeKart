@@ -132,6 +132,13 @@ export default function RegisterPage() {
           </button>
         </form>
 
+        <div className="mt-6 text-sm text-gray-600 text-center">
+        Already have an account?{" "}
+        <Link className=" text-blue-500 hover:underline" to="/login">
+          Login
+        </Link>
+      </div>
+
         <p className="text-xs text-gray-600 mt-4">
           By creating an account, you agree to Amazon's{" "}
           <a href="#" className="text-blue-500 hover:underline">
@@ -144,12 +151,7 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      <div className="mt-6 text-sm text-gray-600">
-        Already have an account?{" "}
-        <Link className="text-blue-500 hover:underline" to="/login">
-          Login
-        </Link>
-      </div>
+     
     </div>
   );
 }

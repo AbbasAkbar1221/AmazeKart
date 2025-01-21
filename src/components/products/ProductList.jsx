@@ -13,18 +13,22 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/products");
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5001/products", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setProductData(response.data);
         setLoading(false);
       } catch (err) {
-        navigate('/login')
+        navigate("/login");
         setError("Failed to fetch products");
         setLoading(false);
       }
     };
-
     fetchProducts();
-  }, []);
+  }, [])
 
   if (loading) return <div>Loading products...</div>;
   if (error) return <div>{error}</div>;
