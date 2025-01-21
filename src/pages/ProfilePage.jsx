@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../slices/authSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
 
@@ -12,21 +13,21 @@ const ProfilePage = () => {
 
   const logoutUser = async () => {
     try {
-      await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/logout",
-        { token: refreshToken },
-        { headers: { Authorization: `Bearer ${refreshToken}` } }
+        { token: refreshToken }
       );
-
+  
+      console.log("Logout response:", response.data);
+  
       localStorage.removeItem("refreshToken");
-
-      dispatch(setCurrentUser ({currentUser: null}) );
-
+      dispatch(setCurrentUser(null));
       navigate("/login");
     } catch (err) {
-      console.log("Error logging out: ", err);
+      console.error("Error logging out:", err);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -39,6 +40,15 @@ const ProfilePage = () => {
             <p className="text-gray-600 text-sm">
               You are successfully logged in.
             </p>
+            <div className="mt-4 text-sm">
+              <Link to="/">
+              <button
+                className="text-blue-500 hover:underline"
+              >
+                Home
+              </button>
+              </Link>
+            </div>
             <div className="mt-4 text-sm">
               <button
                 onClick={logoutUser}

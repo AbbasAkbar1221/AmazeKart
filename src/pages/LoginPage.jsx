@@ -19,26 +19,33 @@ export default function LoginPage() {
     if (name === "password") setPassword(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError(null);
-    axios
-      .post("http://localhost:5000/login", { username, password })
-      .then((response) => {
-        const { token, refresh_token } = response?.data;
-        dispatch(setCurrentUser( {username} ));
-        localStorage.setItem('token', token)
-        localStorage.setItem('refreshToken', refresh_token)
-        navigate("/products");
-        // navigate("/profile");
-      })
-      .catch((err) => {
-        const errorMessage =
-          err.response.data.message || "Something went wrong";
-        setError(errorMessage);
-      });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    
+    setError(null); 
+    
+    try {
+      const response = await axios.post("http://localhost:5000/login", { username, password });
+  
+      const { token, refresh_token } = response?.data || {};
+  
+      if (!token || !refresh_token) {
+        throw new Error("Invalid response from the server. Please try again.");
+      }
 
+      dispatch(setCurrentUser({ username }));
+  
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refresh_token);
+  
+      navigate("/products");
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || "Something went wrong. Please try again.";
+      setError(errorMessage); 
+      console.error("Login failed:", errorMessage);
+    }
+  };
+  
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
       <div className="mb-6">
