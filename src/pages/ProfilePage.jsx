@@ -1,34 +1,32 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { setCurrentUser } from "../slices/authSlice";
-import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
 
-  // const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = localStorage.getItem("refreshToken");
   const currentUser = useSelector((state) => state.auth.currentUser);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // const logoutUser = async () => {
-  //   try {
-  //     await axios.post(
-  //       "http://localhost:5000/logout",
-  //       { token: refreshToken },
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
+  const logoutUser = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5000/logout",
+        { token: refreshToken },
+        { headers: { Authorization: `Bearer ${refreshToken}` } }
+      );
 
-  //     localStorage.removeItem("refreshToken");
+      localStorage.removeItem("refreshToken");
 
-  //     dispatch(setCurrentUser ({currentUser: null}) );
+      dispatch(setCurrentUser ({currentUser: null}) );
 
-  //     navigate("/login");
-  //   } catch (err) {
-  //     console.log("Error logging out: ", err);
-  //   }
-  // };
+      navigate("/login");
+    } catch (err) {
+      console.log("Error logging out: ", err);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -42,14 +40,12 @@ const ProfilePage = () => {
               You are successfully logged in.
             </p>
             <div className="mt-4 text-sm">
-              <Link className="text-blue-500 hover:underline " to="/login">
               <button
-                // onClick={logoutUser}
+                onClick={logoutUser}
                 className="text-blue-500 hover:underline"
               >
                 Logout
               </button>
-              </Link>
             </div>
           </div>
         ) : (
