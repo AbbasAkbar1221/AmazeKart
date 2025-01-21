@@ -19,17 +19,17 @@ const Navbar = () => {
         </span>
         <span className="cursor-pointer">All</span>
         </div>
-        <span className="cursor-pointer hover:underline">Fresh</span>
-        <span className="cursor-pointer hover:underline">MX Player</span>
-        <span className="cursor-pointer hover:underline">Sell</span>
-        <span className="cursor-pointer hover:underline">Best Sellers</span>
-        <span className="cursor-pointer hover:underline">Today's Deals</span>
-        <span className="cursor-pointer hover:underline">Mobiles</span>
-        <span className="cursor-pointer hover:underline">Prime</span>
-        <span className="cursor-pointer hover:underline">Customer Service</span>
-        <span className="cursor-pointer hover:underline">Electronics</span>
-        <span className="cursor-pointer hover:underline">Home & Kitchen</span>
-        <span className="cursor-pointer hover:underline">Amazon Pay</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Fresh</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">MX Player</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Sell</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Best Sellers</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Today's Deals</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Mobiles</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Prime</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Customer Service</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Electronics</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Home & Kitchen</span>
+        <span className="cursor-pointer border border-transparent hover:border-white">Amazon Pay</span>
       </div>
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
     </>

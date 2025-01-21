@@ -3,27 +3,47 @@ import { Link } from "react-router-dom";
 import { setCurrentUser } from "../slices/authSlice";
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
-
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
   const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function userDetails(){
-      try{
+    async function userDetails() {
+      try {
         const res = await axios.get("http://localhost:5001/users/me", {
-          headers: {Authorization: `Bearer ${token}`},
+          headers: { Authorization: `Bearer ${token}` },
         });
-        dispatch(setCurrentUser(res.data)); 
-      } catch(err){
+        dispatch(setCurrentUser(res.data));
+      } catch (err) {
         console.log(err);
       }
     }
     userDetails();
-  }, [currentUser])
-  
+  }, [currentUser]);
+
+  // const logoutUser = async () => {
+  //   try {
+  //     await axios.post(
+  //       "http://localhost:5000/logout",
+  //       { token: refreshToken },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+
+  //     localStorage.removeItem("refreshToken");
+
+  //     dispatch(setCurrentUser ({currentUser: null}) );
+
+  //     navigate("/login");
+  //   } catch (err) {
+  //     console.log("Error logging out: ", err);
+  //   }
+  // };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-md bg-white p-6 border border-gray-300 rounded-md shadow-md">
@@ -36,8 +56,13 @@ const ProfilePage = () => {
               You are successfully logged in.
             </p>
             <div className="mt-4 text-sm">
-              <Link className="text-blue-500 hover:underline" to="/login">
+              <Link className="text-blue-500 hover:underline " to="/login">
+              <button
+                // onClick={logoutUser}
+                className="text-blue-500 hover:underline"
+              >
                 Logout
+              </button>
               </Link>
             </div>
           </div>

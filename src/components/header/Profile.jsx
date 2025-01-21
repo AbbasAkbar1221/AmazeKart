@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   return (
-    <div className="flex items-center space-x-2 cursor-pointer">
+    <div className="flex items-center space-x-2 cursor-pointer border border-transparent hover:border-white">
       <Link to="/profile">
         <span className="material-icons">account_circle</span>
       </Link>

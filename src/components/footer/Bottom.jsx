@@ -3,10 +3,11 @@ import logo from "../../assets/amazon_logo_new.png";
 const Bottom = () => {
   return (
     <div>
-      <div className="flex justify-center items-center h-[7vh] bg-slate-700 text-xl text-white">
-        <button
-          className="cursor-pointer bg-transparent text-white hover:text-gray-300"
-        >
+      <div
+        className="flex justify-center items-center h-[7vh] bg-slate-700 text-xl text-white"
+        onClick={() => window.scrollTo(0, 0)}
+      >
+        <button className="cursor-pointer bg-transparent text-white hover:text-gray-300">
           Back to top
         </button>
       </div>
@@ -55,11 +56,7 @@ const Bottom = () => {
 
       <div className="flex justify-center items-center h-[10vh] bg-slate-800 border-t border-white gap-9">
         <span className="text-2xl font-bold text-white">
-          <img
-            src={logo}
-            alt="Amazon Logo"
-            className="h-6 inline"
-          />
+          <img src={logo} alt="Amazon Logo" className="h-6 inline" />
         </span>
         <div className="flex space-x-4">
           <div className="border border-white h-10 w-full rounded-md text-gray-400 pl-2 pr-7 flex items-center">

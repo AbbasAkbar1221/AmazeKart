@@ -125,7 +125,6 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
         </div>
       )}
 
-      {/* Background Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-40"
