@@ -116,7 +116,7 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
+          className="fixed inset-0 bg-black opacity-60 z-40"
           onClick={toggleMenu}
         ></div>
       )}
