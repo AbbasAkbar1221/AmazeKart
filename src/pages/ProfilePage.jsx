@@ -68,6 +68,15 @@ const ProfilePage = () => {
             </p>
           </div>
         )}
+        <div className="mt-4 text-sm text-center">
+              <Link to="/">
+              <button
+                className="text-blue-500 hover:underline"
+              >
+                Home
+              </button>
+              </Link>
+            </div>
       </div>
     </div>
   );
