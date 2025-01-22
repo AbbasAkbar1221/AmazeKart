@@ -12,7 +12,7 @@ const Carousel = () => {
     "bgImage2.png",
     "bgImage3.png",
     "bgImage4.png",
-    "bgImage5.png"
+    "bgImage5.png",
   ];
 
   return (
@@ -30,8 +30,9 @@ const Carousel = () => {
             <img
               src={image}
               alt={`Slide ${index + 1}`}
-              className="w-full h-[50vh] object-cover object-top" 
+              className="w-full h-[75vh] object-cover object-top"
             />
+            <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-b"></div>
           </SwiperSlide>
         ))}
       </Swiper>
