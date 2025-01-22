@@ -59,6 +59,7 @@ const ProfilePage = () => {
             </div>
           </div>
         ) : (
+          <>
           <div className="text-center">
             <h1 className="text-2xl font-semibold text-gray-800 mb-4">
               Please log in to view your profile.
@@ -67,25 +68,27 @@ const ProfilePage = () => {
               You need to be logged in to access this page.
             </p>
           </div>
+          <div className="mt-4 text-sm text-center">
+          <Link to="/">
+          <button
+            className="text-blue-500 hover:underline"
+          >
+            Home
+          </button>
+          </Link>
+        </div>
+    <div className="mt-4 text-sm text-center">
+          <Link to="/login">
+          <button
+            className="text-blue-500 hover:underline"
+          >
+            Login
+          </button>
+          </Link>
+        </div>
+        </>
         )}
-        <div className="mt-4 text-sm text-center">
-              <Link to="/">
-              <button
-                className="text-blue-500 hover:underline"
-              >
-                Home
-              </button>
-              </Link>
-            </div>
-        <div className="mt-4 text-sm text-center">
-              <Link to="/login">
-              <button
-                className="text-blue-500 hover:underline"
-              >
-                Login
-              </button>
-              </Link>
-            </div>
+        
       </div>
     </div>
   );
