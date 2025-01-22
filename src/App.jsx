@@ -4,7 +4,7 @@ import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import CartPage from "./pages/CartPage";
-import HomePage from "./pages/HomePage";
+import HomePage, { Auth } from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -70,14 +70,11 @@ function App() {
     const fetchUserDetails = async () => {
       try {
         const response = await retryCall("http://localhost:5001/users/me");
-        console.log("Response object:", response);
-        console.log("user",response.data.username);
         dispatch(setCurrentUser(response.data)); 
       } catch (err) {
         console.error("Failed to fetch user details:", err);
       }
     };
-
     fetchUserDetails();
   }, []);
  
@@ -87,7 +84,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={layout(<HomePage />)} />
+
+          <Route element={<Auth/>}>
           <Route path="/cart" element={layout(<CartPage />)} />
+          </Route>
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
