@@ -1,24 +1,25 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const SideMenu = ({ isOpen, toggleMenu }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   console.log(currentUser);
-  
+
   return (
-    <> 
+    <>
       <div
         className={`fixed top-0 left-0 h-full w-80 bg-gray-800 text-white transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50 overflow-y-auto`}
       >
-        
         <div className="bg-gray-800 flex items-center text-white px-5 py-4">
-        <span className="material-icons mr-1">account_circle</span> 
-          <h2 className="text-lg font-bold">{currentUser ? `Hello, ${currentUser.username}` : "Hello, Customer"}</h2>
+          <span className="material-icons mr-1">account_circle</span>
+          <h2 className="text-lg font-bold">
+            {currentUser ? `Hello, ${currentUser.username}` : "Hello, Customer"}
+          </h2>
         </div>
 
-        
         <div className="bg-white text-black px-6 py-4 space-y-6">
           <div>
             <h3 className="font-bold text-black mb-2">Trending</h3>
@@ -63,7 +64,9 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
                 TV, Appliances, Electronics
               </li>
               <li className="cursor-pointer hover:underline">Men's Fashion</li>
-              <li className="cursor-pointer hover:underline">Women's Fashion</li>
+              <li className="cursor-pointer hover:underline">
+                Women's Fashion
+              </li>
               <li className="cursor-pointer hover:underline">See all</li>
             </ul>
           </div>
@@ -78,7 +81,9 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
               <li className="cursor-pointer hover:underline">
                 Amazon Launchpad
               </li>
-              <li className="cursor-pointer hover:underline">Amazon Business</li>
+              <li className="cursor-pointer hover:underline">
+                Amazon Business
+              </li>
               <li className="cursor-pointer hover:underline">See all</li>
             </ul>
           </div>
@@ -90,7 +95,9 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
               <li className="cursor-pointer hover:underline">
                 Customer Service
               </li>
-              <li className="cursor-pointer hover:underline">Sign in</li>
+              <Link to="/login">
+                <li className="cursor-pointer hover:underline">Sign in</li>
+              </Link>
             </ul>
           </div>
         </div>

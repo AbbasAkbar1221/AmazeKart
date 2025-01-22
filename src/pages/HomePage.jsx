@@ -7,6 +7,10 @@ import { useSelector } from "react-redux";
 export function Auth() {
   const user = useSelector((state) => state.auth.currentUser);
   const location = useLocation();
+  const loading = useSelector(state => state.auth.loading);
+  if(loading){
+    return <div>Loading in auth...</div>
+  }
   return user ? (
     <Outlet />
   ) : (

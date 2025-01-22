@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
@@ -10,7 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductsPage";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "./slices/authSlice";
+import { setCurrentUser, setLoading } from "./slices/authSlice";
 import { useRetryCall } from "./hooks";
 
 function layout(element) {
@@ -64,20 +64,21 @@ function App() {
   //     userDetails();
   //   }, [])
 
-  const [loading, retryCall] = useRetryCall("get");
+  const [_, retryCall] = useRetryCall("get");
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      dispatch(setLoading(true));
       try {
         const response = await retryCall("http://localhost:5001/users/me");
-        dispatch(setCurrentUser(response.data)); 
+        dispatch(setCurrentUser(response.data));
+        dispatch(setLoading(false));
       } catch (err) {
         console.error("Failed to fetch user details:", err);
       }
     };
     fetchUserDetails();
   }, []);
- 
 
   return (
     <div className="App">
@@ -85,10 +86,10 @@ function App() {
         <Routes>
           <Route path="/" element={layout(<HomePage />)} />
 
-          <Route element={<Auth/>}>
+          <Route element={<Auth />}>
           <Route path="/cart" element={layout(<CartPage />)} />
           </Route>
-
+          
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />

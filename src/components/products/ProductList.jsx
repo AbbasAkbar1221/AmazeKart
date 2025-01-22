@@ -46,9 +46,8 @@ const ProductList = () => {
         navigate("/login");
       }
     };
-
     fetchProducts();
-  }, [retryCall, navigate]);
+  }, []);
 
 
 
