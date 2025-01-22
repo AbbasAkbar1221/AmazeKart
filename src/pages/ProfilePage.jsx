@@ -77,6 +77,15 @@ const ProfilePage = () => {
               </button>
               </Link>
             </div>
+        <div className="mt-4 text-sm text-center">
+              <Link to="/login">
+              <button
+                className="text-blue-500 hover:underline"
+              >
+                Login
+              </button>
+              </Link>
+            </div>
       </div>
     </div>
   );
