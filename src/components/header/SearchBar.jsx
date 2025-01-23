@@ -24,7 +24,7 @@ const SearchBar = () => {
       
       <input
         type="text"
-        className="flex-grow p-2 focus:outline-none text-sm"
+        className="flex-grow p-2 focus:outline-none text-sm text-black"
         placeholder="Search Amazon.in"
       />
       
