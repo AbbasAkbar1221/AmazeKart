@@ -6,38 +6,17 @@ import { useRetryCall } from "../../hooks";
 
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const response = await axios.get("http://localhost:5001/products", {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setProductData(response.data);
-  //       setLoading(false);
-  //       window.scrollTo(0, 0);
-  //     } catch (err) {
-  //       navigate("/login");
-  //       setError("Failed to fetch products");
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchProducts();
-  // }, [])
 
   const [loading, retryCall] = useRetryCall("get");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await retryCall("http://localhost:5001/products");
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        const response = await retryCall(`${API_BASE_URL}/products`);
         setProductData(response.data);
         window.scrollTo(0, 0);
       } catch (err) {

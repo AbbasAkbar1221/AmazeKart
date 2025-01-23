@@ -69,8 +69,10 @@ export function useRetryCall(method) {
           
           if (errorMessage === "jwt expired") {
             const refreshToken = localStorage.getItem("refreshToken");
+
+            const API_AUTH_URL = process.env.REACT_APP_API_AUTH_URL;
   
-            const response = await axios.post("http://localhost:5000/token", {
+            const response = await axios.post(`${API_AUTH_URL}/token`, {
               token: refreshToken,
             });
   

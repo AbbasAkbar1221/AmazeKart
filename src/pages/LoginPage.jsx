@@ -25,7 +25,8 @@ export default function LoginPage() {
     setError(null); 
     
     try {
-      const response = await axios.post("http://localhost:5000/login", { username, password });
+      const API_AUTH_URL = process.env.REACT_APP_API_AUTH_URL;
+      const response = await axios.post(`${API_AUTH_URL}/login`, { username, password });
   
       const { token, refresh_token } = response?.data || {};
   

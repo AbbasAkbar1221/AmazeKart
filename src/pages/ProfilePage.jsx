@@ -12,7 +12,9 @@ const ProfilePage = () => {
 
   const logoutUser = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/logout", {
+      const API_AUTH_URL = process.env.REACT_APP_API_AUTH_URL;
+      const response = await axios.post(`${API_AUTH_URL}/logout`, {
+      // const response = await axios.post("http://localhost:5000/logout", {
         token: refreshToken,
       });
 

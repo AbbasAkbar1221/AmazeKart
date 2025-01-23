@@ -27,42 +27,6 @@ function layout(element) {
 function App() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  
-  // const user = useSelector((state) => state.auth.currentUser);
-  // useEffect(() => {
-  //   if (user) {
-  //     axios.get('http://localhost:5001/products', {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     })
-  //       .then(response => {
-  //         const products = response?.data || [];
-  //         const items = products.map((product) => ({
-  //           id: product._id,
-  //           ...product,
-  //           quantity: 1,
-  //           isSelected: true,
-  //         }));
-  //         console.log('success');
-  //       })
-  //       .catch(err => console.error(err));
-  //   }
-  // }, [user]);
-
-  // useEffect(() => {
-  //     async function userDetails(){
-  //       try{
-  //         const res = await axios.get("http://localhost:5001/users/me", {
-  //           headers: {Authorization: `Bearer ${token}`},
-  //         });
-  //         dispatch(setCurrentUser(res.data));
-  //       } catch(err){
-  //         console.log(err);
-  //       }
-  //     }
-  //     userDetails();
-  //   }, [])
 
   const [_, retryCall] = useRetryCall("get");
 
@@ -70,7 +34,8 @@ function App() {
     const fetchUserDetails = async () => {
       dispatch(setLoading(true));
       try {
-        const response = await retryCall("http://localhost:5001/users/me");
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        const response = await retryCall(`${API_BASE_URL}/users/me`);
         dispatch(setCurrentUser(response.data));
         dispatch(setLoading(false));
       } catch (err) {

@@ -17,7 +17,6 @@ export default function CartSummary({ subtotal = 0, cartItems }) {
         </div>
       </div>
 
-      {/* Subtotal Section */}
       <div className="mb-4">
         <p className="text-gray-900">
           Subtotal ({itemCount} {itemCount > 1 ? "Items" : "Item"}):{" "}
